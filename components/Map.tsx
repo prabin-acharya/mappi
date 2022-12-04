@@ -21,6 +21,7 @@ const Map = () => {
             center={center}
             mapContainerStyle={{ height: "100vh", width: "100%" }}
         >
+            <Marker position={center} />
         </GoogleMap>
     );
 };

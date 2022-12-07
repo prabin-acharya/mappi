@@ -1,5 +1,5 @@
 import { DrawingManagerF, GoogleMap, MarkerF } from "@react-google-maps/api";
-import React, { useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 
 const Map = () => {
   const center = useMemo(
@@ -9,6 +9,29 @@ const Map = () => {
     }),
     []
   );
+
+  const onMarkerComplete = useCallback((marker: any) => {
+    console.log("Marker completed: ", marker);
+  }, []);
+
+  const onRectangleComplete = useCallback(
+    (rectangle: google.maps.Rectangle) => {
+      console.log("Rectangle completed: ", rectangle);
+    },
+    []
+  );
+
+  const onCircleComplete = useCallback((circle: google.maps.Circle) => {
+    console.log("Circle completed: ", circle);
+  }, []);
+
+  const onPolygonComplete = useCallback((polygon: google.maps.Polygon) => {
+    console.log("Polygon completed: ", polygon);
+  }, []);
+
+  const onPolylineComplete = useCallback((polyline: google.maps.Polyline) => {
+    console.log("Polyline completed: ", polyline);
+  }, []);
 
   return (
     <GoogleMap
@@ -50,6 +73,11 @@ const Map = () => {
             zIndex: 1,
           },
         }}
+        onPolygonComplete={onPolygonComplete}
+        onPolylineComplete={onPolylineComplete}
+        onRectangleComplete={onRectangleComplete}
+        onCircleComplete={onCircleComplete}
+        onMarkerComplete={onMarkerComplete}
       />
 
       <MarkerF position={center} />

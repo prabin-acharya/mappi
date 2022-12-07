@@ -53,7 +53,10 @@ const Map = () => {
             ],
           },
           markerOptions: {
-            icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+            icon: {
+              url: "https://avatars.githubusercontent.com/u/71175492?v=4",
+              scaledSize: new google.maps.Size(25, 25),
+            },
           },
           circleOptions: {
             fillColor: "#ffff00",

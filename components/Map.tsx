@@ -1,29 +1,43 @@
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-import React, { useMemo, useRef } from "react";
+import { DrawingManagerF, GoogleMap, MarkerF } from "@react-google-maps/api";
+import React, { useMemo } from "react";
 
 const Map = () => {
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
-    });
+  const center = useMemo(
+    () => ({
+      lat: 41.85,
+      lng: -87.65,
+    }),
+    []
+  );
 
-    const center = useMemo(() => ({ lat: 44, lng: -80 }), [])
+  return (
+    <GoogleMap
+      zoom={10}
+      center={{ lat: 41.85, lng: -87.65 }}
+      mapContainerStyle={{ width: "100%", height: "100%" }}
+    >
+      <DrawingManagerF
+        options={{
+          drawingControl: true,
+          drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: [
+              google.maps.drawing.OverlayType.MARKER,
+              google.maps.drawing.OverlayType.CIRCLE,
+              google.maps.drawing.OverlayType.POLYGON,
+              google.maps.drawing.OverlayType.POLYLINE,
+              google.maps.drawing.OverlayType.RECTANGLE,
+            ],
+          },
+          markerOptions: {
+            icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+          },
+        }}
+      />
 
-    const ref = useRef<HTMLDivElement | null>(null);
-    const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([])
-
-    if (!isLoaded) {
-        return <div>Loading...</div>
-    }
-
-    return (
-        <GoogleMap
-            zoom={10}
-            center={center}
-            mapContainerStyle={{ height: "100vh", width: "100%" }}
-        >
-            <Marker position={center} />
-        </GoogleMap>
-    );
+      <MarkerF position={center} />
+    </GoogleMap>
+  );
 };
 
 export default Map;
